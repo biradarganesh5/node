@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: '14'
 
@@ -28,12 +28,13 @@ jobs:
       run: docker build -t public.ecr.aws/p2m0e7n7/nodejs:latest .
 
     - name: Log in to Amazon ECR
-      if: github.ref == 'refs/heads/main'
-      run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p2m0e7n7
+      uses: aws-actions/amazon-ecr-login@v1
+      with:
+        registry-type: public
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
     
     - name: Push Docker image to Amazon ECR
       if: github.ref == 'refs/heads/main'
