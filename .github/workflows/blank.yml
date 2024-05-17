@@ -27,18 +27,28 @@ jobs:
     - name: Build Docker image
       run: docker build -t public.ecr.aws/p2m0e7n7/nodejs:latest .
 
-    - name: Log in to Amazon ECR
+    
+
+
+
+
+      
+    - name: Login to Amazon ECR Public
+      id: login-ecr-public
       uses: aws-actions/amazon-ecr-login@v2
       with:
-        registry-type: public
+          registry-type: public
+
+    - name: Build, tag, and push docker image to Amazon ECR Public
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    
-    
-    - name: Push Docker image to Amazon ECR
-      if: github.ref == 'refs/heads/main'
-      run: docker push public.ecr.aws/p2m0e7n7/nodejs:latest
+          REGISTRY: public
+          REGISTRY_ALIAS: p2m0e7n7
+          REPOSITORY: nodejs
+          IMAGE_TAG: latest
+      run: |
+          docker build -t public.ecr.aws/p2m0e7n7/nodejs .
+          docker push public.ecr.aws/p2m0e7n7/nodejs
+
 
   deploy:
     runs-on: ubuntu-latest
