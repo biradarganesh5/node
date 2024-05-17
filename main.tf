@@ -1,8 +1,8 @@
 provider "aws" {
 
   region = "us-west-2" # Set your desired AWS region
-  access_key = "AKIAYS2NXAWXM7HDAM3G"
-  secret_key = "t9WjaqDROsL//MzIQkgBqarChx1enKaMiCr5w8s8"
+  access_key = "AWS_ACCESS_KEY_ID"
+  secret_key = "AWS_SECRET_ACCESS_KEY"
 }
 
 resource "aws_ecs_cluster" "hello_world_cluster" {
