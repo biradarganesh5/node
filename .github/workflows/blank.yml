@@ -25,7 +25,7 @@ jobs:
       run: npm test
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest .
+      run: docker build -t public.ecr.aws/p2m0e7n7/nodejs:latest .
 
     - name: Log in to Amazon ECR
       if: github.ref == 'refs/heads/main'
